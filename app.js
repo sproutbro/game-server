@@ -1,29 +1,30 @@
+import 'dotenv/config'
 import express from "express";
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+import runnerRouter from "./routes/runner.js";
+import { checkUserFromCookie } from './middlewares/checkUserFromCookie.js';
+import { staticPath } from "./config/path.js";
 const app = express();
+
+app.use(express.static(staticPath, {
+    index: false
+}));
+
+app.use(express.json());
 app.use(cookieParser());
+app.use(session({
+    secret: 'super-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 1000 * 60 * 60
+    }
+}));
+app.use(checkUserFromCookie);
 
-app.get('/skytype1', (req, res) => {
-    console.log('🍪 쿠키 정보:', req.cookies);
-    res.sendFile(path.join(publicPath, "skytype1", 'index.html'));
-});
-
-app.get('/skytype2', (req, res) => {
-    res.sendFile(path.join(publicPath, "skytype2", 'index.html'));
-});
-
-app.get('/skytype3', (req, res) => {
-    res.sendFile(path.join(publicPath, "skytype3", 'index.html'));
-});
-
-const publicPath = path.join(__dirname, '..', 'public');
-app.use(express.static(publicPath));
+app.use("/runner", runnerRouter)
 
 const PORT = 3014;
 app.listen(PORT, console.log(`http://localhost:${PORT}`));
