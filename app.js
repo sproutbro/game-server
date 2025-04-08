@@ -27,7 +27,7 @@ app.use(session({
 
 app.use(checkUserFromCookie);
 
-app.use("/runner", express.static(path.join(staticPath, "runner")));
+app.use("/game/runner", express.static(path.join(staticPath, "runner")));
 
 app.use("/api", scoreRouter);
 
