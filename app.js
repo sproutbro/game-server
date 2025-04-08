@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import path from "path";
 import { fileURLToPath } from 'url';
 import { checkUserFromCookie } from './middlewares/checkUserFromCookie.js';
+import scoreRouter from './routes/scores.js';
 
 const app = express();
 
@@ -26,7 +27,9 @@ app.use(session({
 
 app.use(checkUserFromCookie);
 
-app.use("/game/runner", express.static(path.join(staticPath, "runner")));
+app.use("/runner", express.static(path.join(staticPath, "runner")));
+
+app.use("/api", scoreRouter);
 
 const PORT = 3014;
 app.listen(PORT, console.log(`http://localhost:${PORT}`));
