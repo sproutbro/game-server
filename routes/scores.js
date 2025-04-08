@@ -3,11 +3,11 @@ import { saveScore } from "../models/score.js";
 const router = express.Router();
 
 router.post("/scores", async (req, res) => {
-    if (!req.session?.user) {
+    if (!req.user) {
         return res.status(201).json({ message: '비회원 완료' });
     }
 
-    const userId = req.session?.user?.id;
+    const userId = req.user?.id;
     const score = req.body.score;
 
     if (!userId || !score) {
