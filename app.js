@@ -29,7 +29,7 @@ app.use(checkUserFromCookie);
 
 app.use("/game/runner", express.static(path.join(staticPath, "runner")));
 
-app.use("/api", scoreRouter);
+app.use("/game/api", scoreRouter);
 
 const PORT = 3014;
 app.listen(PORT, console.log(`http://localhost:${PORT}`));
