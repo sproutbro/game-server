@@ -8,7 +8,7 @@ router.post("/scores", async (req, res) => {
     const newScore = req.body.score;
 
     if (!userId || !newScore) {
-        return res.status(400).json({ message: '필수 값 누락' });
+        return res.status(400).json({ message: "", score: "" });
     }
 
     if (!id) {
