@@ -9,4 +9,5 @@ const staticPath = path.join(__dirname, '..', '..', 'static');
 export function registerStaticRoutes(app) {
     app.use("/game/runner", express.static(path.join(staticPath, "runner")));
     app.use("/game/quiz", express.static(path.join(staticPath, "quiz")));
+    app.use("/game/battle", express.static(path.join(staticPath, "battle")));
 }
